@@ -1,0 +1,117 @@
+//
+//  CardView.swift
+//  hike
+//
+//  Created by Abhishek Bhalerao on 09/08/25.
+//
+
+import SwiftUI
+
+struct CardView: View {
+
+    @State private var randomNumber: Int = 0
+    @State private var imageNumber: Int = 1
+
+    func changeImage() {
+        repeat {
+            randomNumber = Int.random(in: 1...5)
+        } while randomNumber == imageNumber
+        imageNumber = randomNumber
+    }
+
+    var body: some View {
+        ZStack {
+            CustomBackgroundView()
+            VStack {
+
+                VStack {
+                    HStack {
+                        Text("Hiking")
+                            .fontWeight(.black)
+                            .font(.system(size: 52))
+                            .foregroundStyle(
+                                LinearGradient(
+                                    colors: [
+                                        Color.colorGrayLight,
+                                        Color.colorGrayMedium,
+                                    ],
+                                    startPoint: .top,
+                                    endPoint: .bottom
+                                )
+                            )
+                        Spacer()
+                        Button(
+                            action: {
+
+                            },
+                            label: {
+                                CustomButtonView()
+                            }
+                        )
+                    }
+                    Text(
+                        "Enjoy outdoor adventures fun activity with family and friends"
+                    )
+                    .multilineTextAlignment(.leading)
+                    .italic()
+                    .foregroundStyle(Color.colorGrayMedium)
+                }
+                .padding(.horizontal, 10)
+
+                ZStack {
+                    Circle().fill(
+                        LinearGradient(
+                            colors: [
+                                Color.colorIndigoMedium,
+                                Color.colorSalmonLight,
+                            ],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .frame(width: 256, height: 256)
+
+                    Image("image-\(imageNumber)")
+                        .resizable()
+                        .scaledToFit()
+                        .animation(.easeOut(duration: 2), value: imageNumber)
+                }
+
+                Button(
+                    action: {
+                        changeImage()
+                    },
+                    label: {
+                        Text("Explore")
+                            .fontWeight(.heavy)
+                            .font(.title2)
+                            .foregroundStyle(
+                                LinearGradient(
+                                    colors: [
+                                        Color.colorGreenMedium,
+                                        Color.colorGreenDark,
+                                    ],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            ).shadow(
+                                color: .black.opacity(0.25),
+                                radius: 0.25,
+                                x: 1.0,
+                                y: 2.0
+                            )
+
+                    }
+                )
+                .buttonStyle(GradientButtonStyle())
+                .buttonStyle(.glass)
+
+            }
+            .frame(width: 320, height: 570)
+        }
+    }
+}
+
+#Preview {
+    CardView()
+}
