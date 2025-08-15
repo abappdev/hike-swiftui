@@ -11,6 +11,7 @@ struct CardView: View {
 
     @State private var randomNumber: Int = 0
     @State private var imageNumber: Int = 1
+    @State private var isShowingSettings = false
 
     func changeImage() {
         repeat {
@@ -42,7 +43,7 @@ struct CardView: View {
                         Spacer()
                         Button(
                             action: {
-
+                                isShowingSettings = true
                             },
                             label: {
                                 CustomButtonView()
@@ -98,7 +99,14 @@ struct CardView: View {
 
             }
             .frame(width: 320, height: 570)
-        }
+        }.sheet(
+            isPresented: $isShowingSettings,
+            content: {
+                SettingsView()
+                    .presentationDragIndicator(.visible)
+                    .presentationDetents([.medium, .large])
+            }
+        )
     }
 }
 
