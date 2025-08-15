@@ -60,7 +60,7 @@ struct SettingsView: View {
             .frame(maxWidth: .infinity)
 
             Section(
-                header: Text("About"),
+                header: Text("About the app"),
                 footer: HStack {
                     Spacer()
                     Text("Made with 💖 in India 🇮🇳")

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+internal import System
 
 struct CustomListRowView: View {
 
@@ -17,9 +18,17 @@ struct CustomListRowView: View {
     var body: some View {
         LabeledContent(
             content: {
-                Text(rowContent)
-                    .foregroundStyle(.primary)
-                    .fontWeight(.heavy)
+                if rowIcon == "globe.fill" {
+                    if let url = URL(string: "https://www.abappdev.in") {
+                        Link(destination: url) {
+                            Text(rowContent)
+                        }
+                    }
+                } else {
+                    Text(rowContent)
+                        .foregroundStyle(.primary)
+                        .fontWeight(.heavy)
+                }
             },
             label: {
                 HStack {
