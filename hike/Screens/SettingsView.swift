@@ -8,6 +8,14 @@
 import SwiftUI
 
 struct SettingsView: View {
+
+    private let appIcons: [String] = [
+        "AppIcon-Map",
+        "AppIcon-Campfire",
+        "AppIcon-Camera",
+        "AppIcon-Backpack",
+    ]
+
     var body: some View {
         List {
             HStack {
@@ -60,6 +68,49 @@ struct SettingsView: View {
             .frame(maxWidth: .infinity)
 
             Section(
+                header: Text("Change app icon"),
+            ) {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack {
+                        ForEach(appIcons.indices, id: \.self) { item in
+                            Button(
+                                action: {
+                                    UIApplication.shared.setAlternateIconName(
+                                        appIcons[item]
+                                    ) {
+                                        error in
+
+                                        if let error = error {
+                                            print("Unable to set alternate icon: \(error.localizedDescription)")
+                                        } else {
+                                            print("Icon changed successfully!")
+                                        }
+
+                                    }
+
+                                },
+                                label: {
+                                    Image("\(appIcons[item])-Preview")
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 80, height: 80)
+                                        .cornerRadius(16)
+                                }
+
+                            ).buttonStyle(.borderless)
+                        }
+                    }
+
+                }.padding(.top, 12)
+
+                Text(
+                    "Choose your favourite one, \nand save it as your new app icon!"
+                )
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity)
+            }
+
+            Section(
                 header: Text("About the app"),
                 footer: HStack {
                     Spacer()
@@ -95,7 +146,7 @@ struct SettingsView: View {
                     rowContent: "Abhishek Bhalerao",
                     rowTintColor: .pink
                 )
-                
+
                 CustomListRowView(
                     rowIcon: "globe.fill",
                     rowTitle: "Website",
